@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #0f49bd;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#111318]">
+<div class="relative flex h-auto min-h-screen w-full flex-col dark justify-between group/design-root" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+<div class="flex-grow">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="w-12"></div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Daily Log</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-2xl">
+                settings
+                </span>
+</button>
+</div>
+</div>
+<div class="mt-8 mx-4 p-6 bg-gradient-to-br from-[#1D2027] to-[#16191F] rounded-3xl shadow-lg border border-white/10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="absolute inset-0 bg-[var(--primary-color)] opacity-30 rounded-full blur-lg"></div>
+<div class="text-white flex items-center justify-center rounded-full bg-[#1A2D50] shrink-0 size-12 relative z-10">
+<span class="material-symbols-outlined text-3xl text-[#60A5FA]">
+                          spark
+                      </span>
+</div>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#D1D5DB] text-sm font-medium leading-normal">AI Reminder</p>
+<p class="text-white text-lg font-bold leading-normal">New Entry Suggestion</p>
+</div>
+</div>
+<p class="text-[#9DA6B9] text-base font-normal leading-relaxed mt-5">
+              It seems like you've been at the <span class="text-white font-medium">Park</span> for a while. Would you like to add a new entry about your experience?
+          </p>
+<div class="flex justify-stretch gap-4 mt-6">
+<button class="flex flex-1 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-4 bg-[#282E39] text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors hover:bg-[#3A414D]">
+<span class="truncate">No, thanks</span>
+</button>
+<button class="flex flex-1 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-4 bg-[var(--primary-color)] text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors hover:bg-blue-700">
+<span class="truncate">Add Entry</span>
+</button>
+</div>
+</div>
+</div>
+<div class="sticky bottom-0">
+<div class="bg-[#1C1F27]/80 backdrop-blur-lg rounded-t-3xl border-t border-white/10">
+<div class="flex justify-around items-center pt-3 pb-5">
+<a class="flex flex-col items-center justify-end gap-1 text-[var(--primary-color)]" href="#">
+<span class="material-symbols-outlined text-2xl">
+                    calendar_month
+                </span>
+<p class="text-xs font-medium tracking-[0.015em]">Daily Log</p>
+</a>
+<a class="flex flex-col items-center justify-end gap-1 text-[#9DA6B9]" href="#">
+<div class="size-14 rounded-full bg-[var(--primary-color)] flex items-center justify-center -translate-y-6 shadow-lg shadow-blue-500/30">
+<span class="material-symbols-outlined text-white text-3xl">add</span>
+</div>
+</a>
+<a class="flex flex-col items-center justify-end gap-1 text-[#9DA6B9]" href="#">
+<span class="material-symbols-outlined text-2xl opacity-50">
+                    search
+                </span>
+<p class="text-xs font-medium tracking-[0.015em]">Search</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

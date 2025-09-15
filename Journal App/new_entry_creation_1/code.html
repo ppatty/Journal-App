@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>New Journal Entry</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    :root {
+      --primary-color: #3b82f6;--background-start: #0f172a;--background-end: #020617;--surface-color: #1e293b;--text-primary: #e2e8f0;--text-secondary: #94a3b8;--border-color: #334155;
+    }
+    body {
+      font-family: 'Inter', "Noto Sans", sans-serif;
+      background-color: var(--background-start);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .form-input {
+        border-radius: 1.5rem;}
+    .form-textarea {
+        border-radius: 1.5rem;
+    }
+    .btn-primary {
+        border-radius: 1.5rem;}
+    .tag-button {
+        border-radius: 9999px;
+    }
+    .bottom-nav {
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      background: linear-gradient(180deg, var(--surface-color) 0%, rgba(30, 41, 59, 0.8) 100%);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gradient-to-b from-[var(--background-start)] to-[var(--background-end)] text-[var(--text-primary)]">
+<div class="relative flex h-auto min-h-screen w-full flex-col justify-between group/design-root overflow-x-hidden">
+<div class="flex-grow">
+<header class="sticky top-0 z-20 bg-transparent pt-4 px-4">
+<div class="flex items-center p-2 backdrop-blur-sm bg-[var(--surface-color)]/50 rounded-2xl">
+<button class="text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h1 class="text-lg font-bold flex-1 text-center text-[var(--text-primary)]">New Entry</h1>
+<div class="w-8"></div>
+</div>
+</header>
+<main class="p-6 space-y-8">
+<div class="space-y-3">
+<label class="text-sm font-medium text-[var(--text-secondary)]" for="title">Title</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-[var(--text-primary)] focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] border border-[var(--border-color)] bg-[var(--surface-color)] h-14 placeholder:text-[var(--text-secondary)] p-4 text-base font-normal transition-all" id="title" placeholder="Give your entry a title" value=""/>
+</div>
+<div class="space-y-3">
+<label class="text-sm font-medium text-[var(--text-secondary)]" for="entry">Your thoughts</label>
+<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-none overflow-hidden text-[var(--text-primary)] focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] border border-[var(--border-color)] bg-[var(--surface-color)] min-h-56 placeholder:text-[var(--text-secondary)] p-4 text-base font-normal transition-all" id="entry" placeholder="Write your entry here..."></textarea>
+</div>
+<div>
+<h3 class="text-sm font-medium text-[var(--text-secondary)] mb-3">Entry Type</h3>
+<div class="flex h-16 flex-1 items-center justify-center rounded-2xl bg-[var(--surface-color)] p-2">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-xl px-3 has-[:checked]:bg-[var(--primary-color)] has-[:checked]:shadow-lg has-[:checked]:shadow-blue-500/30 has-[:checked]:text-white text-[var(--text-secondary)] text-sm font-semibold transition-all">
+<span class="material-symbols-outlined mr-2">subject</span>
+<span>Text</span>
+<input checked="" class="invisible w-0" name="entry-type" type="radio" value="Text"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-xl px-3 has-[:checked]:bg-[var(--primary-color)] has-[:checked]:shadow-lg has-[:checked]:shadow-blue-500/30 has-[:checked]:text-white text-[var(--text-secondary)] text-sm font-semibold transition-all">
+<span class="material-symbols-outlined mr-2">format_quote</span>
+<span>Quote</span>
+<input class="invisible w-0" name="entry-type" type="radio" value="Quote"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-xl px-3 has-[:checked]:bg-[var(--primary-color)] has-[:checked]:shadow-lg has-[:checked]:shadow-blue-500/30 has-[:checked]:text-white text-[var(--text-secondary)] text-sm font-semibold transition-all">
+<span class="material-symbols-outlined mr-2">image</span>
+<span>Image</span>
+<input class="invisible w-0" name="entry-type" type="radio" value="Image"/>
+</label>
+</div>
+</div>
+<div>
+<h3 class="text-sm font-medium text-[var(--text-secondary)] mb-3">Tags</h3>
+<div class="flex gap-3 flex-wrap">
+<button class="tag-button flex h-10 shrink-0 items-center justify-center gap-x-2 bg-blue-900/50 text-blue-300 px-5 transition-colors hover:bg-blue-900">
+<span class="text-sm font-medium">Personal</span>
+</button>
+<button class="tag-button flex h-10 shrink-0 items-center justify-center gap-x-2 bg-green-900/50 text-green-300 px-5 transition-colors hover:bg-green-900">
+<span class="text-sm font-medium">Work</span>
+</button>
+<button class="tag-button flex h-10 shrink-0 items-center justify-center gap-x-2 bg-purple-900/50 text-purple-300 px-5 transition-colors hover:bg-purple-900">
+<span class="text-sm font-medium">Travel</span>
+</button>
+<button class="tag-button flex h-10 shrink-0 items-center justify-center gap-x-2 border border-dashed border-[var(--border-color)] text-[var(--text-secondary)] px-5 transition-colors hover:bg-[var(--surface-color)] hover:border-solid hover:border-[var(--primary-color)] hover:text-[var(--primary-color)]">
+<span class="material-symbols-outlined text-base">add</span>
+<span class="text-sm font-medium">Add Tag</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<footer class="sticky bottom-0 z-10">
+<div class="px-6 py-4">
+<button class="btn-primary flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-14 px-4 bg-[var(--primary-color)] text-white text-base font-bold shadow-lg shadow-blue-500/30 hover:bg-blue-500 transition-all">
+<span class="truncate">Save Entry</span>
+</button>
+</div>
+<nav class="bottom-nav flex justify-around border-t border-[var(--border-color)] pb-safe">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<p class="text-xs font-medium">Daily Log</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[var(--primary-color)]" href="#">
+<div class="relative">
+<div class="absolute -inset-2 bg-[var(--primary-color)] opacity-30 rounded-full blur-md"></div>
+<div class="bg-[var(--primary-color)] text-white rounded-full p-3 relative">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<p class="text-xs font-bold mt-1">New Entry</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<p class="text-xs font-medium">Search</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-xs font-medium">Profile</p>
+</a>
+</nav>
+</footer>
+</div>
+
+</body></html>

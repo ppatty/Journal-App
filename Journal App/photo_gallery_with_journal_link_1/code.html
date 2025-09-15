@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Stitch Design</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #137fec;
+        --secondary-color: #f0f2f4;
+        --text-primary: #111418;
+        --text-secondary: #617589;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-white">
+<div class="flex flex-col h-screen" style='font-family: Inter, "Noto Sans", sans-serif;'>
+<header class="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+<div class="flex items-center justify-between p-4">
+<button class="text-[var(--text-primary)]">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<h1 class="text-xl font-bold text-[var(--text-primary)]">Gallery</h1>
+<button class="text-[var(--primary-color)]">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto">
+<div class="grid grid-cols-3 gap-1">
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY0dddjjRYxWSqorxD9wOxqXqXD0E8OR1O3oJx5jZo-0bdlg_uVPb9TnQuuItmmjqqHY3VpKE50Jmf0u54ne7nRusuUMPZ4YRANDm4BqVFlXM302maMQ6D-q0iiLjdsORrWhtcoLvPAQHYatyTuDzAvFdCF5OI5C9Wo4YzvOeqFxSNQaiIRj-0e0g5_iA0eyU4gEhvbe064dY-t3VCG3bh4ae2HhTwdvTLqLK0caoepSAGYVWeDgw-b-FOHIB-9pGj1qHRSxB9-0k"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKL6WwNx0ddxuxBxLfG3u2iRlurfcwsB6fbTqsp8zkHNEihTedZW8YXU7dRgak-EYJXnCDz80k_OenQ3FKgn1UdwlO59jDd51xKOYBh1cR5XZLbSJRrXpl2F-Q0lGOLkuk0Tc80LgA17KC-Iq4cAH5CfPHKxIdN4KtwvAAeQcvVSuNhqYvFiKn2BORHn_kH_VifJZpzLZVUMRPFkDgwHtyl15ryFpkedqRQgEHzktu9i_mpLsPyWT-AOgc-MHz_bFJDLtwbuljxCs"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA89FykZVvy9HyK2e45G5ifwrtS56ebd2W1bwPtjUv2AmvyHn9EidqvP_A8J4NNb5ZKUhwWTtgKxlVwmbkjwoIvGTXjwlNkt_aoYW2jUGzRoTDXWLOvNsbC3qZtb90DjhEpAFsZlc__mCeDbj_CSTJxNdK7vGsOSbC3JuQv657HJhk2z3NHlsbSy3klY3OCNT1w0PxDixuB1AkfeTmaamNSPkZb7_sfxKjD6USPin8iwd8jTaRk73DQA7Y3NX3zFgbPScy-59fr_Mk"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd6UxQKF4d-Z66Plow-0S8KyuUW6Pa3i2ntZLBipnLUMozIX63bDNoMiQS8PUIR2s5QAwZYhWCqRC6zPLndtQAviSRojkkDJmCK87O89MPJiWxhUHYVb8kBAWo9Bd9LZGXY7dyBx2-4lklbj5EaHW2WB35Wah6frwzCPH-QpZyvrp4SefveBT87jR9EZl-WACeZTMoC6g9jkviXARm7WEutxYKIwbGs3Ic_CYdN549Zl7G0Q6lTdHyu-Ysorvco6vvQ4TPDBCIdKA"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiqtkmjLk_R-CDPWo5HoycZPRphc9ZSvQ-SecFY4oQ2PwKD_nliHvbvFB_GxJOywkNMJD86NqTuJjgi5xwqz_A_EPd3-DvazB73CMXp4kRMVEKP29s0DnaVWCMl94ro_xf6l4tMbIKN2xwu9nn5tmon0TjADPgzHqL35HSYjAWzW6ReySKQ3Ok1DlAk5V4mc85elQmsc0OEVZHedqOpOLvOKYEEetLbPvV1p-wSvt783USj0wYgK2Ea7_gOXGL1VFQuWI6NMGses4"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-VQ_omTa_px7RWmDZ1HggTUnraHoVVZswgP7QowZhmAotq23bF9q_YPMA4gNMDzfm553S47tIo8Es04WoyMRlB-ktPRW6mwt7V7OZO1U2OK7Ws2sopJAn3FiU7GhgDZPu6ACnBRnrpKtZPkrqM-izjC9fdZMxqd2pKnfhqw-qgE5I5WJDgfRPIFpZyd5Cy84cpCtCCt29HQAcbJBuO21te89VvDLDruSpA6vZ3X0ss9smfQaCvKNobYlvHkD-vdDDSvPSPOaZFPI"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeuSpr6_u5Fw1JLQPVGuFzN1CJhLi-D47lv08UzCd2CcKXaFtwbpYJvHb2mEQBWiBm2XyT9k_TCYmRUpc2x8D6Y2bATaNKKZyfw44qEiA08G9cFc8CEH7C-vKA-VWmSkymf1hIidxpWRTaDBKrOoIqmVgzwnG-UYjzAYy8El4fvrq3FmZAWBero-lQw3CPtB-7IqlWTwHnjpboKmsk-7wOImjywoMJtBO0iHBdgF8vHMgWGK0HszI5byR-pk634CbhnhvkAo6ZD4A"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOfASVAcxK9LVC-KzBsIQY4PaZNXvJ5Di3TNAAb_pqMTAN4XcS6voLfJCUm6x2tQG-4N4YLE9DiSZH1JW-3oeg7kD6mUfOygz_kIlUl5pto-EdSLx6NdUFYnIkxz9UJMIJkTgBAu8eiLcWgbrK32_wG6ArINzU4vCz70iLq6YFLcVeYAn9lTlpZv79IzuBlGsLZxhKhzygt5EYL4fzQgp5q6CjFrVNqDIwu-4Yz6ZgJoqhUWZZ9fVfhjk58k5D0Hsao5LDWKGrfMs"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc-V2I3573qU6s-GRITA1AAUjPjnTI4Cm7-kA6WKcvIXdhhnmB2JU85kh-o9RXW4t2Y80P8oJN5btRPGw__BKrweZPrAMrBkiZe-GrHas8eCfx-E0N7S9zb7PntuH9Yd8s0kS1LqP_QLEUam6w-QT5bDVlkoKYpsaFsj3VW8BPL_nEPBhOI_lDXgEryhT_bTjFjMcQePn_wPGVmNG9QISyq4RNETeo_mqhMGCluBuvq7LNP_UAzGm1DGZnSusA4UHO5Alm8B9v-9g"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9k0qY6ATNsb9sjhrFgr6LesQ1NGDipyVwvHOAUq8W7tARntjaC3EOQhZM1sF84zBZXJiWdu0xuCT28XpPVR1mb5u5sYwrj0BTwVb0BQuwP-PqzkYlolY2RKn82RFs74ItV49nSU1J6nATzwINKDn-fUjC44kbpKaLzsWfzZ8Zl7b7bOuwwsv44PaHndEK8kQuAii0QHyqEPLFIJ4jXmQOIdaqSO_CO8fOkfqEBFvlausaJX6RfO7GvaIMe0i2iAk_1QaCl39Bvv8"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEDXNj8nj6QwqtW01PmSr4FUl3jaf6k3ZQUp0rZxlPY4s50KQ5c38yYo5IrV6YT7kM6kFvoi4usxemCs1YVmj1uooWMnjnPemktp9YHn0XLABs2ARJpSNHTHpBmYx2dBaECJCcyc-yJIJyZK_N5lUTYUwhPW32orAXV_O7qnemUshDzcQRb20oN__CxrWbZX38usLS7QhHU5LM04xhbZrggswHpfrjx24f_04zHLGdiQRFBtjZkSmAl_RLxO1jfJplYY_vf1nMpjc"/>
+</a>
+<a class="aspect-square block" href="#">
+<img alt="Journal image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuL36_sW-Eu09WrFb7YvVT7j6MovekxTf9fPnSeI-c_wnsIE1goVaTIGl2tOSuU4fFlYD59QEF1rE2MGTaXQVLNRoKUbCUCsNOViWafJiMPnIffEE7zwG1gLioRzTevZjYboKvDkC7Xubq_EKHwNrWUwZs8dYR_thCz_6N8Ba6QzbuO5Dnd22g6aQBsSN5NurkpPJcjeN6BIozIQyTyer1z5d_D08ORUpeb5rlN9KmAXHE3L7MNCstbnx-TnfnW4PeFjPn02zZ08A"/>
+</a>
+</div>
+</main>
+<footer class="sticky bottom-0 bg-white border-t border-[var(--secondary-color)]">
+<nav class="flex justify-around items-center h-16 px-4">
+<a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-xs font-medium">Daily Log</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-xs font-medium">New Entry</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-xs font-medium">Search</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-xs font-medium">Profile</span>
+</a>
+</nav>
+<div class="h-5 bg-white"></div>
+</footer>
+</div>
+
+</body></html>

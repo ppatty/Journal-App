@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>New Journal Entry</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #1380ec;
+      }
+      body {
+        font-family: 'Inter', "Noto Sans", sans-serif;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-50">
+<div class="relative flex h-auto min-h-screen w-full flex-col justify-between group/design-root overflow-x-hidden">
+<div class="flex-grow">
+<header class="bg-white sticky top-0 z-10 border-b border-gray-200">
+<div class="flex items-center p-4">
+<button class="text-gray-600 hover:text-gray-900">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h1 class="text-gray-900 text-lg font-bold flex-1 text-center">New Entry</h1>
+<div class="w-8"></div>
+</div>
+</header>
+<main class="p-4 space-y-6">
+<div class="space-y-2">
+<label class="text-sm font-medium text-gray-700" for="title">Title</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] border-gray-300 bg-white h-12 placeholder:text-gray-400 p-3 text-base font-normal" id="title" placeholder="Give your entry a title" value=""/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-gray-700" for="entry">Your thoughts</label>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 focus:outline-0 focus:ring-2 focus:ring-[var(--primary-color)] border-gray-300 bg-white min-h-48 placeholder:text-gray-400 p-3 text-base font-normal" id="entry" placeholder="Write your entry here..."></textarea>
+</div>
+<div>
+<h3 class="text-sm font-medium text-gray-700 mb-2">Entry Type</h3>
+<div class="flex h-12 flex-1 items-center justify-center rounded-lg bg-gray-100 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-[var(--primary-color)] text-gray-600 text-sm font-semibold transition-all">
+<span class="material-symbols-outlined mr-2">subject</span>
+<span>Text</span>
+<input checked="" class="invisible w-0" name="entry-type" type="radio" value="Text"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-[var(--primary-color)] text-gray-600 text-sm font-semibold transition-all">
+<span class="material-symbols-outlined mr-2">format_quote</span>
+<span>Quote</span>
+<input class="invisible w-0" name="entry-type" type="radio" value="Quote"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-3 has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-[var(--primary-color)] text-gray-600 text-sm font-semibold transition-all">
+<span class="material-symbols-outlined mr-2">image</span>
+<span>Image</span>
+<input class="invisible w-0" name="entry-type" type="radio" value="Image"/>
+</label>
+</div>
+</div>
+<div>
+<h3 class="text-sm font-medium text-gray-700 mb-2">Tags</h3>
+<div class="flex gap-3 flex-wrap">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-blue-100 text-blue-800 px-4">
+<span class="text-sm font-medium">Personal</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-green-100 text-green-800 px-4">
+<span class="text-sm font-medium">Work</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-purple-100 text-purple-800 px-4">
+<span class="text-sm font-medium">Travel</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full border border-dashed border-gray-400 text-gray-600 px-4">
+<span class="material-symbols-outlined text-base">add</span>
+<span class="text-sm font-medium">Add Tag</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<footer class="bg-white/80 backdrop-blur-sm sticky bottom-0">
+<div class="px-4 py-4">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-4 flex-1 bg-[var(--primary-color)] text-white text-base font-bold shadow-lg shadow-blue-500/30 hover:bg-blue-600 transition-all">
+<span class="truncate">Save Entry</span>
+</button>
+</div>
+<nav class="flex justify-around border-t border-gray-200 pb-safe">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-2 text-gray-500 hover:text-[var(--primary-color)] transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<p class="text-xs font-medium">Daily Log</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-2 text-[var(--primary-color)]" href="#">
+<div class="bg-[var(--primary-color)] text-white rounded-full p-2">
+<span class="material-symbols-outlined">add</span>
+</div>
+<p class="text-xs font-bold">New Entry</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-2 text-gray-500 hover:text-[var(--primary-color)] transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<p class="text-xs font-medium">Search</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 py-2 text-gray-500 hover:text-[var(--primary-color)] transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-xs font-medium">Profile</p>
+</a>
+</nav>
+</footer>
+</div>
+
+</body></html>

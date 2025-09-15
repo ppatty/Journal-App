@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">::  - App name: Journal App::  - App ID:   com.ppatty.journal::  - Web dir:  dist   (important):: 4) build your web app so the dist/ folder existsnpm run build:: 5) add &amp; sync the Android projectnpx cap add androidnpx cap sync android:: 6) open in Android Studionpx cap open android</string>
+    <string name="title_activity_main">::  - App name: Journal App::  - App ID:   com.ppatty.journal::  - Web dir:  dist   (important):: 4) build your web app so the dist/ folder existsnpm run build:: 5) add &amp; sync the Android projectnpx cap add androidnpx cap sync android:: 6) open in Android Studionpx cap open android</string>
+    <string name="package_name">com.ppatty.journal</string>
+    <string name="custom_url_scheme">com.ppatty.journal</string>
+</resources>

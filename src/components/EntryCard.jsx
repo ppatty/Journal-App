@@ -5,6 +5,7 @@ const typeIcons = {
   text: '📝',
   quote: '💬',
   photo: '📷',
+  video: '🎬',
   audio: '🎧',
   summary: '🧾'
 }
@@ -26,6 +27,16 @@ const AttachmentPreview = ({ entry }) => {
       <div className="gallery-grid" aria-label={`${entry.attachments.images.length} related photos`}>
         {entry.attachments.images.slice(0, 4).map((url) => (
           <img key={url} src={url} alt="Related entry visual" loading="lazy" />
+        ))}
+      </div>
+    )
+  }
+
+  if (entry.attachments?.videos?.length) {
+    return (
+      <div className="gallery-grid" aria-label={`${entry.attachments.videos.length} related videos`}>
+        {entry.attachments.videos.slice(0, 1).map((url) => (
+          <video key={url} src={url} muted loop playsInline preload="metadata" />
         ))}
       </div>
     )

@@ -123,7 +123,7 @@ const InsightsView = ({ entries }) => {
           <div className="summary-callout">
             <strong>Media mix</strong>
             <span style={{ color: 'var(--text-secondary)' }}>
-              {mediaBreakdown.photos} photo entries · {mediaBreakdown.audio} audio · {mediaBreakdown.textOnly} text only
+              {mediaBreakdown.photos} photo entries · {mediaBreakdown.videos} video · {mediaBreakdown.audio} audio · {mediaBreakdown.textOnly} text only
             </span>
           </div>
           <div className="summary-callout">

@@ -15,6 +15,7 @@ export const initialEntries = [
       images: [
         'https://images.unsplash.com/photo-1521459467264-802e2ef3141f?auto=format&fit=crop&w=800&q=80'
       ],
+      videos: [],
       audio: null
     },
     location: 'Prospect Park, Brooklyn',
@@ -44,6 +45,7 @@ export const initialEntries = [
     aiFollowUp: 'How can you bring this sense of ownership into tomorrow\'s meeting?',
     attachments: {
       images: [],
+      videos: [],
       audio: null
     },
     location: 'Home Office',
@@ -68,6 +70,7 @@ export const initialEntries = [
     aiFollowUp: 'Want to turn this idea into a reminder for tomorrow\'s stand-up?',
     attachments: {
       images: [],
+      videos: [],
       audio: 'https://cdn.pixabay.com/download/audio/2023/09/26/audio_c7784fd9da.mp3?filename=calm-ambient-155795.mp3'
     },
     location: 'Q Train',
@@ -95,6 +98,7 @@ export const initialEntries = [
         'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
         'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80'
       ],
+      videos: [],
       audio: null
     },
     location: 'Downtown Art Museum',
@@ -119,6 +123,7 @@ export const initialEntries = [
     aiFollowUp: 'Would you like to schedule focus blocks for the mornings you mentioned?',
     attachments: {
       images: [],
+      videos: [],
       audio: null
     },
     location: 'Kitchen Table',
@@ -145,6 +150,7 @@ export const initialEntries = [
       images: [
         'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80'
       ],
+      videos: [],
       audio: null
     },
     location: 'Home Kitchen',
@@ -171,6 +177,7 @@ export const initialEntries = [
       images: [
         'https://images.unsplash.com/photo-1463100099107-aa0980c362e6?auto=format&fit=crop&w=800&q=80'
       ],
+      videos: [],
       audio: null
     },
     location: 'Hudson River Park',
@@ -198,6 +205,7 @@ export const initialEntries = [
         'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
         'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80'
       ],
+      videos: [],
       audio: null
     },
     location: 'Downtown',
@@ -207,5 +215,30 @@ export const initialEntries = [
       readingTime: '1 min'
     },
     connectedTo: ['4']
+  },
+  {
+    id: '9',
+    title: 'Studio Lighting Test Footage',
+    type: 'video',
+    createdAt: '2025-02-10T18:40:00Z',
+    mood: 'Creative',
+    sentiment: 0.68,
+    tags: ['Creativity', 'Video', 'Work'],
+    summary: 'Captured a quick lighting test for the upcoming brand film.',
+    content:
+      'Recorded a short clip while experimenting with the new softbox and edge light setup. The cooler gel created the cinematic contrast I was chasing for next week\'s brand film.',
+    aiFollowUp: 'Which shots felt closest to the mood you want to capture next week?',
+    attachments: {
+      images: [],
+      videos: ['https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'],
+      audio: null
+    },
+    location: 'Studio Loft',
+    weather: 'Indoors · Controlled lighting',
+    metrics: {
+      wordCount: 38,
+      readingTime: '1 min'
+    },
+    connectedTo: ['8']
   }
 ]

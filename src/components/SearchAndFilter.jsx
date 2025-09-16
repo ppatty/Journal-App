@@ -57,7 +57,15 @@ const SearchAndFilter = ({
       })
     }
 
-    if (!filters.hasMedia && entries.some((entry) => entry.attachments?.audio || entry.attachments?.images?.length)) {
+    if (
+      !filters.hasMedia &&
+      entries.some(
+        (entry) =>
+          entry.attachments?.audio ||
+          entry.attachments?.images?.length ||
+          entry.attachments?.videos?.length
+      )
+    ) {
       suggestions.push({
         id: 'media',
         label: 'Entries with rich media',

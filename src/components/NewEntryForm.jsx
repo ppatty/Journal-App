@@ -6,6 +6,7 @@ const suggestedFollowUps = {
   text: 'What made this moment stand out today?',
   quote: 'How does this quote connect to something you are working on?',
   photo: 'What story does this image capture?',
+  video: 'What does this video help you remember when you watch it again?',
   audio: 'What do you want future-you to remember from this note?',
   summary: 'What trend did you notice while looking back?'
 }
@@ -28,7 +29,8 @@ const keywordTagMap = [
   { tags: ['Creativity', 'Photography'], keywords: ['sketch', 'design', 'photo', 'gallery', 'art'] },
   { tags: ['Family', 'Personal'], keywords: ['family', 'kids', 'parent', 'picnic'] },
   { tags: ['Travel'], keywords: ['travel', 'trip', 'museum', 'walk'] },
-  { tags: ['Food'], keywords: ['cook', 'recipe', 'dinner', 'curry'] }
+  { tags: ['Food'], keywords: ['cook', 'recipe', 'dinner', 'curry'] },
+  { tags: ['Video', 'Creativity'], keywords: ['video', 'film', 'recording', 'clip', 'reel'] }
 ]
 
 const entityStopWords = new Set(['The', 'And', 'Your', 'Today', 'Yesterday', 'Entry'])
@@ -49,6 +51,7 @@ const initialFormState = (tagPool) => ({
   quoteAuthor: '',
   quoteContext: '',
   imageUrls: [''],
+  videoUrls: [''],
   audioUrl: '',
   location: '',
   weather: '',
@@ -62,6 +65,9 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
   const [customTag, setCustomTag] = useState('')
   const [isRecording, setIsRecording] = useState(false)
   const [transcriptSegments, setTranscriptSegments] = useState([])
+  const [imageUploads, setImageUploads] = useState([])
+  const [videoUploads, setVideoUploads] = useState([])
+  const [audioUpload, setAudioUpload] = useState(null)
 
   const tagSuggestions = useMemo(() => {
     const haystack = `${formData.title} ${formData.content} ${formData.quoteText}`.toLowerCase()
@@ -102,6 +108,29 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
     })
   }
 
+  const readFilesAsDataUrls = async (files, kind) => {
+    const selections = Array.from(files ?? [])
+    if (!selections.length) return []
+
+    return Promise.all(
+      selections.map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = () =>
+              resolve({
+                id: `${kind}-${file.name}-${file.lastModified}-${Math.random().toString(36).slice(2, 7)}`,
+                name: file.name,
+                dataUrl: reader.result,
+                kind
+              })
+            reader.onerror = () => reject(new Error(`Failed to read file: ${file.name}`))
+            reader.readAsDataURL(file)
+          })
+      )
+    )
+  }
+
   const updateImageUrl = (index, value) => {
     setFormData((current) => {
       const next = [...current.imageUrls]
@@ -119,6 +148,86 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
       ...current,
       imageUrls: current.imageUrls.filter((_, position) => position !== index)
     }))
+  }
+
+  const updateVideoUrl = (index, value) => {
+    setFormData((current) => {
+      const next = [...current.videoUrls]
+      next[index] = value
+      return { ...current, videoUrls: next }
+    })
+  }
+
+  const addVideoField = () => {
+    setFormData((current) => ({ ...current, videoUrls: [...current.videoUrls, ''] }))
+  }
+
+  const removeVideoField = (index) => {
+    setFormData((current) => ({
+      ...current,
+      videoUrls: current.videoUrls.filter((_, position) => position !== index)
+    }))
+  }
+
+  const handleImageUpload = async (event) => {
+    try {
+      const uploads = await readFilesAsDataUrls(event.target.files, 'image')
+      if (uploads.length) {
+        setImageUploads((current) => [...current, ...uploads])
+      }
+    } catch (error) {
+      console.error(error)
+      alert('There was an issue processing the selected images. Please try again.')
+    } finally {
+      if (event.target?.value) {
+        event.target.value = ''
+      }
+    }
+  }
+
+  const handleVideoUpload = async (event) => {
+    try {
+      const uploads = await readFilesAsDataUrls(event.target.files, 'video')
+      if (uploads.length) {
+        setVideoUploads((current) => [...current, ...uploads])
+      }
+    } catch (error) {
+      console.error(error)
+      alert('There was an issue processing the selected videos. Please try again.')
+    } finally {
+      if (event.target?.value) {
+        event.target.value = ''
+      }
+    }
+  }
+
+  const handleAudioUpload = async (event) => {
+    try {
+      const uploads = await readFilesAsDataUrls(event.target.files, 'audio')
+      if (uploads.length) {
+        setAudioUpload(uploads[0])
+        handleFieldChange('audioUrl', '')
+      }
+    } catch (error) {
+      console.error(error)
+      alert('There was an issue processing the audio file. Please try again.')
+    } finally {
+      if (event.target?.value) {
+        event.target.value = ''
+      }
+    }
+  }
+
+  const removeImageUpload = (id) => {
+    setImageUploads((current) => current.filter((item) => item.id !== id))
+  }
+
+  const removeVideoUpload = (id) => {
+    setVideoUploads((current) => current.filter((item) => item.id !== id))
+  }
+
+  const clearAudioUpload = () => {
+    setAudioUpload(null)
   }
 
   const handleAddCustomTag = () => {
@@ -155,6 +264,9 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
     setCustomTag('')
     setIsRecording(false)
     setTranscriptSegments([])
+    setImageUploads([])
+    setVideoUploads([])
+    setAudioUpload(null)
   }
 
   const handleSubmit = (event) => {
@@ -169,6 +281,15 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
     const now = new Date()
     const timestamp = formData.date ? new Date(`${formData.date}T${now.toTimeString().slice(0, 8)}`) : now
 
+    const manualImages = sanitizeUrls(formData.imageUrls)
+    const manualVideos = sanitizeUrls(formData.videoUrls)
+    const uploadedImages = imageUploads.map((upload) => upload.dataUrl).filter(Boolean)
+    const uploadedVideos = videoUploads.map((upload) => upload.dataUrl).filter(Boolean)
+    const images = Array.from(new Set([...manualImages, ...uploadedImages]))
+    const videos = Array.from(new Set([...manualVideos, ...uploadedVideos]))
+    const manualAudio = formData.audioUrl.trim()
+    const audioSource = audioUpload?.dataUrl ?? (manualAudio.length ? manualAudio : null)
+
     const baseEntry = {
       id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
       title: formData.title.trim(),
@@ -181,8 +302,9 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
       content: formData.content.trim(),
       aiFollowUp: formData.aiFollowUp.trim() || suggestedFollowUps[formData.type],
       attachments: {
-        images: sanitizeUrls(formData.imageUrls),
-        audio: formData.audioUrl.trim() || null
+        images,
+        videos,
+        audio: audioSource
       },
       location: formData.location.trim() || undefined,
       weather: formData.weather.trim() || undefined,
@@ -423,9 +545,35 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
         <div className="surface-grid columns-2">
           <div>
             <span className="section-label">Images</span>
+            <label className="media-upload-control">
+              <span>📷 Upload images</span>
+              <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
+            </label>
+            {imageUploads.length ? (
+              <div className="media-preview-grid">
+                {imageUploads.map((upload) => (
+                  <div key={upload.id} className="media-preview">
+                    <img src={upload.dataUrl} alt={upload.name} loading="lazy" />
+                    <div className="media-preview__meta">
+                      <span>{upload.name}</span>
+                      <button
+                        type="button"
+                        className="button-secondary"
+                        onClick={() => removeImageUpload(upload.id)}
+                      >
+                        ✖ Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
             <div className="surface-grid">
               {formData.imageUrls.map((url, index) => (
-                <div key={index} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <div
+                  key={`image-${index}`}
+                  style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+                >
                   <input
                     type="text"
                     value={url}
@@ -445,43 +593,124 @@ const NewEntryForm = ({ onSave, availableTags = defaultTags }) => {
                 </div>
               ))}
             </div>
-            <button className="button-secondary" type="button" style={{ marginTop: '0.75rem' }} onClick={addImageField}>
-              ➕ Add another image
+            <button
+              className="button-secondary"
+              type="button"
+              style={{ marginTop: '0.75rem' }}
+              onClick={addImageField}
+            >
+              ➕ Add another image link
             </button>
           </div>
 
           <div>
-            <span className="section-label">Audio</span>
-            <div className="surface-grid">
-              <input
-                type="text"
-                value={formData.audioUrl}
-                onChange={(event) => handleFieldChange('audioUrl', event.target.value)}
-                placeholder="Link to a hosted audio file"
-              />
-              <button
-                type="button"
-                className="button-secondary"
-                onClick={simulateVoiceCapture}
-                disabled={isRecording}
-              >
-                {isRecording ? 'Recording…' : '🎙️ Capture via voice' }
-              </button>
-            </div>
-            {transcriptSegments.length ? (
-              <div className="voice-transcript">
-                <span className="section-label">Live transcription</span>
-                <ul>
-                  {transcriptSegments.map((segment) => (
-                    <li key={segment.id}>
-                      <span>{segment.timestamp}</span>
-                      <p>{segment.text}</p>
-                    </li>
-                  ))}
-                </ul>
+            <span className="section-label">Videos</span>
+            <label className="media-upload-control">
+              <span>🎬 Upload videos</span>
+              <input type="file" accept="video/*" multiple onChange={handleVideoUpload} />
+            </label>
+            {videoUploads.length ? (
+              <div className="media-preview-grid">
+                {videoUploads.map((upload) => (
+                  <div key={upload.id} className="media-preview">
+                    <video src={upload.dataUrl} controls preload="metadata" />
+                    <div className="media-preview__meta">
+                      <span>{upload.name}</span>
+                      <button
+                        type="button"
+                        className="button-secondary"
+                        onClick={() => removeVideoUpload(upload.id)}
+                      >
+                        ✖ Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : null}
+            <div className="surface-grid">
+              {formData.videoUrls.map((url, index) => (
+                <div
+                  key={`video-${index}`}
+                  style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+                >
+                  <input
+                    type="text"
+                    value={url}
+                    onChange={(event) => updateVideoUrl(index, event.target.value)}
+                    placeholder="Paste a video URL (mp4, webm, etc)"
+                  />
+                  {formData.videoUrls.length > 1 ? (
+                    <button
+                      className="button-secondary"
+                      type="button"
+                      onClick={() => removeVideoField(index)}
+                      aria-label="Remove video URL"
+                    >
+                      ✖
+                    </button>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+            <button
+              className="button-secondary"
+              type="button"
+              style={{ marginTop: '0.75rem' }}
+              onClick={addVideoField}
+            >
+              ➕ Add another video link
+            </button>
           </div>
+        </div>
+
+        <div>
+          <span className="section-label">Audio</span>
+          <label className="media-upload-control">
+            <span>🎧 Upload audio</span>
+            <input type="file" accept="audio/*" onChange={handleAudioUpload} />
+          </label>
+          {audioUpload ? (
+            <div className="media-preview media-preview--audio">
+              <audio controls src={audioUpload.dataUrl} aria-label="Uploaded audio preview" />
+              <div className="media-preview__meta">
+                <span>{audioUpload.name}</span>
+                <button type="button" className="button-secondary" onClick={clearAudioUpload}>
+                  ✖ Remove
+                </button>
+              </div>
+            </div>
+          ) : null}
+          <div className="surface-grid">
+            <input
+              type="text"
+              value={formData.audioUrl}
+              onChange={(event) => handleFieldChange('audioUrl', event.target.value)}
+              placeholder="Link to a hosted audio file"
+              disabled={Boolean(audioUpload)}
+            />
+            <button
+              type="button"
+              className="button-secondary"
+              onClick={simulateVoiceCapture}
+              disabled={isRecording}
+            >
+              {isRecording ? 'Recording…' : '🎙️ Capture via voice'}
+            </button>
+          </div>
+          {transcriptSegments.length ? (
+            <div className="voice-transcript">
+              <span className="section-label">Live transcription</span>
+              <ul>
+                {transcriptSegments.map((segment) => (
+                  <li key={segment.id}>
+                    <span>{segment.timestamp}</span>
+                    <p>{segment.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <label>

@@ -59,13 +59,15 @@ export const calculateMediaBreakdown = (entries) => {
   return entries.reduce(
     (acc, entry) => {
       const hasImages = Boolean(entry.attachments?.images?.length)
+      const hasVideos = Boolean(entry.attachments?.videos?.length)
       const hasAudio = Boolean(entry.attachments?.audio)
       if (hasImages) acc.photos += 1
+      if (hasVideos) acc.videos += 1
       if (hasAudio) acc.audio += 1
-      if (!hasImages && !hasAudio) acc.textOnly += 1
+      if (!hasImages && !hasVideos && !hasAudio) acc.textOnly += 1
       return acc
     },
-    { photos: 0, audio: 0, textOnly: 0 }
+    { photos: 0, videos: 0, audio: 0, textOnly: 0 }
   )
 }
 

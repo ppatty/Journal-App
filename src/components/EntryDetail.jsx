@@ -52,6 +52,17 @@ const EntryDetail = ({ entry }) => {
         </div>
       ) : null}
 
+      {entry.attachments?.videos?.length ? (
+        <div style={{ marginTop: '1.5rem' }}>
+          <p className="section-label">Video</p>
+          <div className="gallery-grid">
+            {entry.attachments.videos.map((url) => (
+              <video key={url} src={url} controls preload="metadata" />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       {entry.attachments?.audio ? (
         <div style={{ marginTop: '1.5rem' }}>
           <p className="section-label">Voice Note</p>

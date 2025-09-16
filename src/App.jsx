@@ -1,22 +1,23 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import DailyLogView from './components/DailyLogView.jsx'
 import NewEntryForm from './components/NewEntryForm.jsx'
 import SearchAndFilter from './components/SearchAndFilter.jsx'
 import InsightsView from './components/InsightsView.jsx'
 import ProfileView from './components/ProfileView.jsx'
-import MobileNav from './components/MobileNav.jsx'
+import AppLayout from './components/AppLayout.jsx'
 import { initialEntries } from './data/initialEntries.js'
 import { smartReminders } from './data/smartReminders.js'
 import { userProfile as initialProfile } from './data/userProfile.js'
 import { defaultTags } from './utils/constants.js'
 import { calculateStreak } from './utils/analytics.js'
 
-const tabs = [
-  { id: 'daily', label: 'Daily log', icon: '📅' },
-  { id: 'create', label: 'New entry', icon: '✨' },
-  { id: 'search', label: 'Search', icon: '🔍' },
-  { id: 'insights', label: 'Insights', icon: '📊' },
-  { id: 'profile', label: 'Profile', icon: '👤' }
+const navItems = [
+  { path: '/daily', label: 'Daily log', icon: '📅' },
+  { path: '/entries/new', label: 'New entry', icon: '✨' },
+  { path: '/search', label: 'Search', icon: '🔍' },
+  { path: '/insights', label: 'Insights', icon: '📊' },
+  { path: '/profile', label: 'Profile', icon: '👤' }
 ]
 
 const emptyFilters = {
@@ -28,12 +29,113 @@ const emptyFilters = {
   hasMedia: false
 }
 
+const AppRoutes = ({
+  entries,
+  reminders,
+  selectedEntry,
+  setSelectedEntryId,
+  availableTags,
+  onAddEntry,
+  searchTerm,
+  onSearchTermChange,
+  filters,
+  onFiltersChange,
+  filteredEntries,
+  profile,
+  onTogglePreference,
+  onUpdateProfile,
+  scrollToTop
+}) => {
+  const navigate = useNavigate()
+
+  const handleSelectEntry = useCallback(
+    (entry) => {
+      setSelectedEntryId(entry.id)
+      navigate('/daily')
+      scrollToTop()
+    },
+    [navigate, scrollToTop, setSelectedEntryId]
+  )
+
+  const handleStartNewEntry = useCallback(() => {
+    navigate('/entries/new')
+    scrollToTop()
+  }, [navigate, scrollToTop])
+
+  const handleOpenSearch = useCallback(() => {
+    navigate('/search')
+    scrollToTop()
+  }, [navigate, scrollToTop])
+
+  const handleSaveEntry = useCallback(
+    (entry) => {
+      onAddEntry(entry)
+      navigate('/daily')
+      scrollToTop()
+    },
+    [navigate, onAddEntry, scrollToTop]
+  )
+
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/daily" replace />} />
+      <Route
+        path="/daily"
+        element={
+          <DailyLogView
+            entries={entries}
+            selectedEntry={selectedEntry}
+            onSelectEntry={handleSelectEntry}
+            onStartNewEntry={handleStartNewEntry}
+            reminders={reminders}
+            onOpenSearch={handleOpenSearch}
+          />
+        }
+      />
+      <Route
+        path="/entries/new"
+        element={<NewEntryForm onSave={handleSaveEntry} availableTags={availableTags} />}
+      />
+      <Route
+        path="/search"
+        element={
+          <SearchAndFilter
+            entries={filteredEntries}
+            searchTerm={searchTerm}
+            onSearchChange={onSearchTermChange}
+            filters={filters}
+            onFiltersChange={onFiltersChange}
+            onSelectEntry={handleSelectEntry}
+            selectedEntryId={selectedEntry?.id ?? null}
+            availableTags={availableTags}
+          />
+        }
+      />
+      <Route path="/insights" element={<InsightsView entries={entries} />} />
+      <Route
+        path="/profile"
+        element={
+          <ProfileView
+            user={profile}
+            entries={entries}
+            onTogglePreference={onTogglePreference}
+            onUpdateProfile={onUpdateProfile}
+          />
+        }
+      />
+      <Route path="*" element={<Navigate to="/daily" replace />} />
+    </Routes>
+  )
+}
+
 const App = () => {
   const [entries, setEntries] = useState(initialEntries)
-  const [activeView, setActiveView] = useState('daily')
   const [selectedEntryId, setSelectedEntryId] = useState(initialEntries[0]?.id ?? null)
   const [reminders, setReminders] = useState(smartReminders)
-  const [profile, setProfile] = useState(() => ({ ...initialProfile, preferences: { ...initialProfile.preferences } }))
+  const [profile, setProfile] = useState(() => ({
+    ...initialProfile,
+    preferences: { ...initialProfile.preferences }
+  }))
   const [searchTerm, setSearchTerm] = useState('')
   const [filters, setFilters] = useState(emptyFilters)
 
@@ -55,7 +157,8 @@ const App = () => {
   }, [])
 
   const availableTags = useMemo(() => {
-    const tagSet = new Set([...defaultTags, ...profile.favoriteTags])
+    const favoriteTags = profile.favoriteTags ?? []
+    const tagSet = new Set([...defaultTags, ...favoriteTags])
     entries.forEach((entry) => entry.tags?.forEach((tag) => tagSet.add(tag)))
     return Array.from(tagSet).sort((a, b) => a.localeCompare(b))
   }, [entries, profile.favoriteTags])
@@ -89,7 +192,11 @@ const App = () => {
       const matchesFrom = !filters.dateFrom || createdAt >= new Date(filters.dateFrom)
       const matchesTo = !filters.dateTo || createdAt <= new Date(`${filters.dateTo}T23:59:59`)
 
-      const hasMedia = Boolean(entry.attachments?.images?.length || entry.attachments?.audio)
+      const hasMedia = Boolean(
+        entry.attachments?.images?.length ||
+          entry.attachments?.videos?.length ||
+          entry.attachments?.audio
+      )
       const matchesMedia = !filters.hasMedia || hasMedia
 
       return matchesSearch && matchesType && matchesMood && matchesTags && matchesFrom && matchesTo && matchesMedia
@@ -98,33 +205,24 @@ const App = () => {
 
   const streak = useMemo(() => calculateStreak(entries), [entries])
 
-  const handleSelectEntry = (entry) => {
-    setSelectedEntryId(entry.id)
-    if (activeView !== 'daily') {
-      setActiveView('daily')
-    }
-    scrollToTop()
-  }
-
-  const handleAddEntry = (entry) => {
+  const handleAddEntry = useCallback((entry) => {
     setEntries((current) => [entry, ...current])
     setSelectedEntryId(entry.id)
-    setActiveView('daily')
     setReminders((current) => [
       {
         id: `reminder-${entry.id}`,
         title: `Reflect on ${entry.title}`,
         trigger: 'New entry created just now',
         dueAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        suggestedAction: 'Check back tomorrow and add a follow-up note to see what evolved.',
+        suggestedAction:
+          'Check back tomorrow and add a follow-up note to see what evolved.',
         category: 'Reflection'
       },
       ...current
     ])
-    scrollToTop()
-  }
+  }, [])
 
-  const handleTogglePreference = (key) => {
+  const handleTogglePreference = useCallback((key) => {
     setProfile((current) => ({
       ...current,
       preferences: {
@@ -132,98 +230,40 @@ const App = () => {
         [key]: !current.preferences[key]
       }
     }))
-  }
+  }, [])
 
-  const handleStartNewEntry = () => {
-    setActiveView('create')
-    scrollToTop()
-  }
-
-  const handleOpenSearch = () => {
-    setActiveView('search')
-    scrollToTop()
-  }
-
-  const handleNavigate = useCallback(
-    (view) => {
-      setActiveView(view)
-      if (view === 'daily' && selectedEntryId == null && entries[0]) {
-        setSelectedEntryId(entries[0].id)
-      }
-      scrollToTop()
-    },
-    [entries, scrollToTop, selectedEntryId]
-  )
-
-  const renderView = () => {
-    switch (activeView) {
-      case 'daily':
-        return (
-          <DailyLogView
-            entries={entries}
-            selectedEntry={selectedEntry}
-            onSelectEntry={handleSelectEntry}
-            onStartNewEntry={handleStartNewEntry}
-            reminders={reminders}
-            onOpenSearch={handleOpenSearch}
-          />
-        )
-      case 'create':
-        return <NewEntryForm onSave={handleAddEntry} availableTags={availableTags} />
-      case 'search':
-        return (
-          <SearchAndFilter
-            entries={filteredEntries}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            filters={filters}
-            onFiltersChange={setFilters}
-            onSelectEntry={handleSelectEntry}
-            selectedEntryId={selectedEntry?.id ?? null}
-            availableTags={availableTags}
-          />
-        )
-      case 'insights':
-        return <InsightsView entries={entries} />
-      case 'profile':
-        return <ProfileView user={profile} entries={entries} onTogglePreference={handleTogglePreference} />
-      default:
-        return null
-    }
-  }
+  const handleUpdateProfile = useCallback((updates) => {
+    setProfile((current) => ({
+      ...current,
+      ...updates,
+      contact: { ...current.contact, ...(updates.contact ?? {}) },
+      favoriteTags: updates.favoriteTags ?? current.favoriteTags,
+      preferences: { ...current.preferences }
+    }))
+  }, [])
 
   return (
-    <div className="app-shell">
-      <main className="app-content">
-        <header className="top-bar" style={{ alignItems: 'flex-end' }}>
-          <div>
-            <h1>Journal Companion</h1>
-            <p style={{ marginTop: '0.35rem', color: 'var(--text-secondary)' }}>
-              Capture memories, surface insights, and stay connected to what matters most.
-            </p>
-          </div>
-          <div className="top-bar-actions">
-            <nav className="tab-bar" aria-label="Primary views">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  className={`tab-button${activeView === tab.id ? ' active' : ''}`}
-                  onClick={() => handleNavigate(tab.id)}
-                >
-                  {tab.icon} {tab.label}
-                </button>
-              ))}
-            </nav>
-            <span className="badge">🔥 {streak}-day streak</span>
-          </div>
-        </header>
-
-        {renderView()}
-      </main>
-
-      <MobileNav activeView={activeView} onNavigate={handleNavigate} />
-    </div>
+    <BrowserRouter>
+      <AppLayout navItems={navItems} streak={streak}>
+        <AppRoutes
+          entries={entries}
+          reminders={reminders}
+          selectedEntry={selectedEntry}
+          setSelectedEntryId={setSelectedEntryId}
+          availableTags={availableTags}
+          onAddEntry={handleAddEntry}
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          filters={filters}
+          onFiltersChange={setFilters}
+          filteredEntries={filteredEntries}
+          profile={profile}
+          onTogglePreference={handleTogglePreference}
+          onUpdateProfile={handleUpdateProfile}
+          scrollToTop={scrollToTop}
+        />
+      </AppLayout>
+    </BrowserRouter>
   )
 }
 

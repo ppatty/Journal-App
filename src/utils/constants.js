@@ -14,6 +14,7 @@ export const entryTypes = [
   { value: 'text', label: 'Text', icon: '📝' },
   { value: 'quote', label: 'Quote', icon: '💬' },
   { value: 'photo', label: 'Photo', icon: '📷' },
+  { value: 'video', label: 'Video', icon: '🎬' },
   { value: 'audio', label: 'Audio', icon: '🎧' },
   { value: 'summary', label: 'Summary', icon: '🧾' }
 ]
@@ -29,5 +30,6 @@ export const defaultTags = [
   'Reflection',
   'Food',
   'Photography',
+  'Video',
   'VoiceNote'
 ]

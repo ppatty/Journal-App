@@ -3,7 +3,7 @@ import EntryCard from './EntryCard.jsx'
 import EntryDetail from './EntryDetail.jsx'
 import AiCompanionPanel from './AiCompanionPanel.jsx'
 import QuoteSpotlight from './QuoteSpotlight.jsx'
-import PhotoGalleryPanel from './PhotoGalleryPanel.jsx'
+import MediaGalleryPanel from './MediaGalleryPanel.jsx'
 import { formatDate, formatRelativeDay } from '../utils/formatters.js'
 
 const DailyLogView = ({
@@ -17,7 +17,11 @@ const DailyLogView = ({
   const galleryItems = useMemo(
     () =>
       entries
-        .flatMap((entry) => (entry.attachments?.images ?? []).map((url) => ({ url, entry })))
+        .flatMap((entry) => {
+          const images = (entry.attachments?.images ?? []).map((url) => ({ url, entry, type: 'image' }))
+          const videos = (entry.attachments?.videos ?? []).map((url) => ({ url, entry, type: 'video' }))
+          return [...images, ...videos]
+        })
         .slice(0, 8),
     [entries]
   )
@@ -150,7 +154,7 @@ const DailyLogView = ({
 
           <QuoteSpotlight quoteEntry={quoteEntry} relatedEntries={quoteConnections} onOpenEntry={onSelectEntry} />
 
-          <PhotoGalleryPanel entries={galleryItems} onSelectEntry={onSelectEntry} />
+          <MediaGalleryPanel items={galleryItems} onSelectEntry={onSelectEntry} />
         </aside>
       </div>
     </div>
